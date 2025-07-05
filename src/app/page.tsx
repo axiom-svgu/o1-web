@@ -5,37 +5,38 @@ import { Menu, X } from "lucide-react";
 
 const content: Record<string, { title: string; lines: string[] }> = {
   crux: {
-    title: "crux",
+    title: "Crux",
     lines: [
-      "o1 is a production studio initiated by axiom aiming to build products.",
-      "it is axiom’s way of providing hands on experience to the students of SVGU on how to build scalable tech.",
-      "a months long process involving weekly stand up sessions to discuss progress and plan for the next week.",
+      "o1 is Axiom's product studio, dedicated to building and shipping real-world, scalable software.",
+      "We're a collective of SVGU students gaining hands-on experience in a collaborative team environment.",
+      "Our multi-month project cycles are structured with weekly sprints, focusing on MVP development, polishing, and continuous learning.",
     ],
   },
   roadmap: {
-    title: "roadmap",
+    title: "Roadmap",
     lines: [
-      "we start off slow. the first session is us discussing what o1 is, how o1 works, and what we’re gonna do.",
-      "we will also discuss the project ideas and give the first task to our contributors, which is to find out project ideas that have a room for innovation and are impactful.",
-      "the ideas they think about shall be discussed in the next lecture.",
+      "Week 1: Introduction to o1's purpose, process, and goals; initial brainstorming for innovative project ideas.",
+      "Week 2: Final project selection via community vote (leads decide ties); initial technical scoping and tech stack discussions, providing learning resources (no coding yet).",
+      "Week 3-5: Deeper tech stack learning, architecture and design brainstorming, formal team formation, and initial task assignments on GitHub.",
+      "Week 6 onwards: Weekly stand-ups, iterative development, and continuous inter-team communication.",
     ],
   },
   structure: {
-    title: "structure",
+    title: "Structure",
     lines: [
-      "initially we work as a single team that brainstorms what we’re building.",
-      "once we have a concrete idea of what we’re working on, we will divide the contributors into 3 teams:",
-      "- design, lead by vaidehi shah.",
-      "- architecture, lead by deepraj bhati.",
-      "- development, lead by vinesh rajpurohit.",
+      "We begin as a single team, brainstorming and defining our product vision through consensus or lead decisions.",
+      "Once the project is concrete, we form specialized teams: Design (Vaidehi Shah), Architecture (Deepraj Bhati), and Development (Vinesh Rajpurohit).",
+      "Team leads manage their work and guide members, conducting code reviews and ensuring tasks are completed.",
+      "Inter-team communication is maintained through a weekly touchpoint and our Discord server.",
     ],
   },
   "how-to-join": {
-    title: "how-to-join",
+    title: "How to Join",
     lines: [
-      "any svgu student can join us. we offer a multitude of areas students can contribute in: management, development, design, marketing, and much more.",
-      "to join, checkout the github repo where we will maintain weekly progress logs.",
-      "our main platform for communication is the axiom discord server. tasks are managed using github issues.",
+      "o1 is open to all SVGU students, offering roles in management, development, design, marketing, and more.",
+      "Onboard yourself via our `axiom-svgu/o1/kb` GitHub folder, containing all project documentation and weekly updates.",
+      "Tasks are managed on GitHub issues; pick what interests you! For deeper commitment or specific roles, contact a team lead.",
+      "Join our community on the Axiom Discord server for communication and updates.",
     ],
   },
 };
@@ -51,19 +52,7 @@ const menuItems = [
   },
   {
     category: "~ community ~",
-    items: [
-      { id: "how-to-join", name: "how-to-join" },
-      {
-        id: "github",
-        name: "github",
-        href: "https://github.com/axiom-svgu/o1",
-      },
-      {
-        id: "discord",
-        name: "discord",
-        href: "https://discord.gg/gnT8W2pHzd",
-      },
-    ],
+    items: [{ id: "how-to-join", name: "how to join" }],
   },
 ];
 
@@ -103,11 +92,6 @@ export default function Home() {
             ? allItems.length - 1
             : (currentIndex - 1) % allItems.length;
         setActiveView(allItems[prevIndex].id);
-      } else if (e.key === "Enter") {
-        const currentItem = allItems.find((item) => item.id === activeView);
-        if (currentItem?.href && currentItem.href !== "#") {
-          window.open(currentItem.href, "_blank");
-        }
       }
 
       // Action shortcuts
@@ -115,14 +99,11 @@ export default function Home() {
 
       switch (e.key) {
         case "g": {
-          const github = allItems.find((item) => item.id === "github");
-          if (github?.href) window.open(github.href, "_blank");
+          window.open("https://github.com/axiom-svgu/o1", "_blank");
           break;
         }
         case "d": {
-          const discord = allItems.find((item) => item.id === "discord");
-          if (discord?.href && discord.href !== "#")
-            window.open(discord.href, "_blank");
+          window.open("https://discord.gg/gnT8W2pHzd", "_blank");
           break;
         }
         case "a":
@@ -160,19 +141,15 @@ export default function Home() {
             {menu.items.map((item) => (
               <li key={item.id}>
                 <a
-                  href={item.href || "#"}
-                  target={item.href ? "_blank" : "_self"}
-                  rel={item.href ? "noopener noreferrer" : ""}
+                  href={`#${item.id}`}
                   className={`block w-full text-left px-1 py-0.5 ${
                     activeView === item.id
                       ? "bg-primary"
                       : "hover:bg-secondary text-muted-foreground"
                   }`}
                   onClick={(e) => {
-                    if (!item.href) {
-                      e.preventDefault();
-                      setActiveView(item.id);
-                    }
+                    e.preventDefault();
+                    setActiveView(item.id);
                     if (onLinkClick) onLinkClick();
                   }}
                 >
@@ -212,7 +189,7 @@ export default function Home() {
             <NavContent />
           </nav>
 
-          <div className="w-full md:w-3/4 p-4 md:overflow-y-auto text-white/85">
+          <div className="w-full md:w-3/4 p-4 md:overflow-y-auto text-white/85 lowercase">
             {selectedContent && (
               <>
                 <h1 className="mb-2 text-lg text-primary">
