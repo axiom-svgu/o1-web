@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import RotatingOne from "../components/ui/rotating-one";
 
 const sections = ["overview", "how to join", "motivation & benefits"];
 
@@ -95,6 +96,7 @@ export default function Home() {
           <h1 className="text-2xl font-bold">
             o1: Axiom&apos;s Production Studio
           </h1>
+          <RotatingOne />
         </div>
         <div className="flex flex-col items-center justify-start w-full flex-1 border-b-2">
           <div className="flex flex-row gap-2 w-full border-y-2">
@@ -146,7 +148,10 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-row justify-between w-full">
-          <div className="flex items-center justify-start w-full px-2 py-1 gap-2">
+          <div
+            className="flex items-center justify-start w-full px-2 py-1 gap-2"
+            suppressHydrationWarning
+          >
             [space] {theme === "dark" ? "light mode" : "dark mode"}.
           </div>
           <div className="flex items-center justify-end w-full px-2 py-1 gap-2">
