@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useTheme } from "next-themes";
 
 const RotatingOne = () => {
-  const { theme } = useTheme();
   const [rotation, setRotation] = useState(0);
   const oneRef = useRef<HTMLDivElement>(null);
 
@@ -33,12 +31,10 @@ const RotatingOne = () => {
   return (
     <div
       ref={oneRef}
-      className={`w-6 h-6 rounded-full flex items-center justify-center ${
-        theme === "dark" ? "bg-white" : "bg-black"
-      }`}
+      className={`w-6 h-6 rounded-full flex items-center justify-center bg-primary text-white`}
     >
       <span
-        className="font-bold text-lg text-orange-500"
+        className="font-bold text-lg"
         style={{ transform: `rotate(${rotation}deg)` }}
       >
         1

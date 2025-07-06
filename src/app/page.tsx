@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import RotatingOne from "../components/ui/rotating-one";
+import { Menu, X } from "lucide-react";
 
-const sections = ["overview", "how to join", "motivation & benefits"];
+const sections = ["[o]verview", "[h]ow to join", "[m]otivation & benefits"];
 
 const content: {
   [key: string]: { nodes: { type: string; content: string }[] };
 } = {
-  overview: {
+  "[o]verview": {
     nodes: [
       {
         type: "h4",
@@ -27,7 +28,7 @@ const content: {
       },
     ],
   },
-  "how to join": {
+  "[h]ow to join": {
     nodes: [
       {
         type: "p",
@@ -41,7 +42,7 @@ const content: {
       },
     ],
   },
-  "motivation & benefits": {
+  "[m]otivation & benefits": {
     nodes: [
       {
         type: "p",
@@ -57,8 +58,15 @@ const content: {
   },
 };
 
+const links = {
+  discord: "https://discord.gg/gnT8W2pHzd",
+  github: "https://github.com/axiom-svgu",
+  twitter: "https://x.com/axiom_svgu",
+};
+
 export default function Home() {
   const [activeSection, setActiveSection] = useState<string>(sections[0]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -69,14 +77,22 @@ export default function Home() {
           setTheme(theme === "dark" ? "light" : "dark");
           break;
         case "d":
-          window.open("https://discord.com", "_blank");
+          window.open(links.discord, "_blank");
           break;
         case "g":
-          window.open("https://github.com", "_blank");
+          window.open(links.github, "_blank");
           break;
         case "t":
-          window.open("https://twitter.com", "_blank");
+          window.open(links.twitter, "_blank");
           break;
+        case "o":
+          setActiveSection(sections[0]);
+          break;
+        case "h":
+          setActiveSection(sections[1]);
+          break;
+        case "m":
+          setActiveSection(sections[2]);
         default:
           break;
       }
@@ -90,16 +106,26 @@ export default function Home() {
   }, [theme, setTheme]);
 
   return (
-    <main className="flex items-center justify-center min-h-screen bg-background font-mono text-sm p-4 md:p-0">
-      <div className="flex flex-col items-center justify-center min-w-4xl max-w-4xl border-2 h-[50vh]">
-        <div className="flex items-center justify-between w-full px-2 py-1">
-          <h1 className="text-2xl font-bold">
-            o1: Axiom&apos;s Production Studio
+    <main className="flex items-center justify-center min-h-screen bg-background font-mono text-sm p-4">
+      <div className="flex flex-col items-center justify-center w-full max-w-4xl border-2 h-[100vh] md:h-[60vh] min-h-[500px]">
+        <div className="flex items-center justify-between w-full px-2 py-1 border-b-2 lg:border-b-0">
+          <h1 className="text-2xl font-bold hidden md:block">
+            <span className="text-primary">o1</span>: Axiom&apos;s Production
+            Studio
           </h1>
-          <RotatingOne />
+          <h1 className="text-2xl font-bold md:hidden text-primary">o1</h1>
+          <div className="hidden md:block">
+            <RotatingOne />
+          </div>
+          <div className="md:hidden">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-1">
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col items-center justify-start w-full flex-1 border-b-2">
-          <div className="flex flex-row gap-2 w-full border-y-2">
+        <div className="flex flex-col items-center justify-start w-full flex-1 border-b-2 overflow-hidden">
+          {/* Desktop tabs */}
+          <div className="hidden md:flex flex-row gap-2 w-full border-y-2">
             {sections.map((section) => (
               <div
                 key={section}
@@ -114,51 +140,86 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="flex flex-col items-start justify-start w-full text-base flex-1 p-2 font-sans overflow-y-auto min-h-0">
-            {content[activeSection].nodes.map((node, index) => {
-              if (node.type === "p") {
-                return (
-                  <p
-                    key={index}
-                    className="mb-4"
-                    dangerouslySetInnerHTML={{ __html: node.content }}
-                  />
-                );
-              }
-              if (node.type === "h4") {
-                return (
-                  <h4
-                    key={index}
-                    className="font-bold text-lg mb-2"
-                    dangerouslySetInnerHTML={{ __html: node.content }}
-                  />
-                );
-              }
-              if (node.type === "item") {
-                return (
-                  <p
-                    key={index}
-                    className="mb-2"
-                    dangerouslySetInnerHTML={{ __html: node.content }}
-                  />
-                );
-              }
-              return null;
-            })}
+          <div className="relative w-full flex-1 overflow-y-auto">
+            {/* Mobile menu */}
+            {isMenuOpen && (
+              <div className="absolute top-0 left-0 w-full bg-background z-10 md:hidden">
+                <div className="flex flex-col w-full border-y-2">
+                  {sections.map((section) => (
+                    <div
+                      key={section}
+                      className={`px-2 py-1 cursor-pointer select-none ${
+                        activeSection === section
+                          ? "bg-primary text-primary-foreground"
+                          : ""
+                      }`}
+                      onClick={() => {
+                        setActiveSection(section);
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      <h2 className="">{section}</h2>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            {/* Content */}
+            <div className="flex flex-col items-start justify-start w-full text-base flex-1 p-2 font-sans min-h-0">
+              {content[activeSection].nodes.map((node, index) => {
+                if (node.type === "p") {
+                  return (
+                    <p
+                      key={index}
+                      className="mb-4"
+                      dangerouslySetInnerHTML={{ __html: node.content }}
+                    />
+                  );
+                }
+                if (node.type === "h4") {
+                  return (
+                    <h4
+                      key={index}
+                      className="font-bold text-lg mb-2"
+                      dangerouslySetInnerHTML={{ __html: node.content }}
+                    />
+                  );
+                }
+                if (node.type === "item") {
+                  return (
+                    <p
+                      key={index}
+                      className="mb-2"
+                      dangerouslySetInnerHTML={{ __html: node.content }}
+                    />
+                  );
+                }
+                return null;
+              })}
+            </div>
           </div>
         </div>
-        <div className="flex flex-row justify-between w-full">
+        <div className="flex flex-col md:flex-row justify-between w-full">
           <div
-            className="flex items-center justify-start w-full px-2 py-1 gap-2"
+            className="flex items-center justify-center md:justify-start w-full px-2 py-1 gap-2 cursor-pointer"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             suppressHydrationWarning
           >
             [space] {theme === "dark" ? "light mode" : "dark mode"}.
           </div>
-          <div className="flex items-center justify-end w-full px-2 py-1 gap-2">
+          <div className="flex items-center justify-center md:justify-end w-full px-2 py-1 gap-2">
             {["[d]iscord", "[t]witter", "[g]ithub"].map((item, i) => (
               <div key={item} className="flex flex-row items-center gap-2">
                 <a
-                  href={`https://${item}.com`}
+                  href={
+                    links[
+                      item
+                        .replace("[", "")
+                        .replace("]", "") as keyof typeof links
+                    ]
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="cursor-pointer hover:bg-primary hover:text-primary-foreground"
                 >
                   {item}
