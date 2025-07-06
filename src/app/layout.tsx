@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -51,6 +53,18 @@ export const metadata: Metadata = {
   },
 };
 
+const fontMono = localFont({
+  src: "../../public/fonts/departure-mono.woff2",
+  display: "swap",
+  variable: "--font-mono",
+});
+
+const fontSans = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,10 +72,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="antialiased">
+      <body className={`antialiased ${fontMono.variable} ${fontSans.variable}`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

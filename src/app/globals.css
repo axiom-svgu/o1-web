@@ -9,14 +9,12 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-mono);
   }
-}
-
-.blinking-cursor {
-  animation: blink 1s step-end infinite;
 }
