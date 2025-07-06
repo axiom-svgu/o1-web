@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -60,7 +60,7 @@ const fontMono = localFont({
   variable: "--font-mono",
 });
 
-const fontSans = Geist({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
@@ -73,7 +73,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`antialiased ${fontMono.variable} ${fontSans.variable}`}>
+      <body
+        className={`antialiased ${fontMono.variable} ${geistMono.variable}`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
