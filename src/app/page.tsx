@@ -59,6 +59,7 @@ const content: {
 };
 
 const links = {
+  axiom: "https://axiomclub.tech",
   discord: "https://discord.gg/gnT8W2pHzd",
   github: "https://github.com/axiom-svgu",
   twitter: "https://x.com/axiom_svgu",
@@ -84,6 +85,9 @@ export default function Home() {
           break;
         case "t":
           window.open(links.twitter, "_blank");
+          break;
+        case "a":
+          window.open(links.axiom, "_blank");
           break;
         case "o":
           setActiveSection(sections[0]);
@@ -213,27 +217,29 @@ export default function Home() {
             [space] {theme === "dark" ? "light mode" : "dark mode"}.
           </div>
           <div className="flex items-center justify-center md:justify-end w-full px-2 py-1 gap-2">
-            {["[d]iscord", "[t]witter", "[g]ithub"].map((item, i) => (
-              <div key={item} className="flex flex-row items-center gap-2">
-                <a
-                  href={
-                    links[
-                      item
-                        .replace("[", "")
-                        .replace("]", "") as keyof typeof links
-                    ]
-                  }
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cursor-pointer hover:bg-primary hover:text-primary-foreground"
-                >
-                  {item}
-                </a>
-                {i < 2 && (
-                  <span className="text-sm text-muted-foreground">{"/"}</span>
-                )}
-              </div>
-            ))}
+            {["[a]xiom", "[d]iscord", "[t]witter", "[g]ithub"].map(
+              (item, i) => (
+                <div key={item} className="flex flex-row items-center gap-2">
+                  <a
+                    href={
+                      links[
+                        item
+                          .replace("[", "")
+                          .replace("]", "") as keyof typeof links
+                      ]
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cursor-pointer hover:bg-primary hover:text-primary-foreground"
+                  >
+                    {item}
+                  </a>
+                  {i < 2 && (
+                    <span className="text-sm text-muted-foreground">{"/"}</span>
+                  )}
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>
