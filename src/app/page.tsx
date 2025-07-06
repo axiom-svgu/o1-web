@@ -234,7 +234,7 @@ export default function Home() {
                   >
                     {item}
                   </a>
-                  {i < 2 && (
+                  {i < 3 && (
                     <span className="text-sm text-muted-foreground">{"/"}</span>
                   )}
                 </div>
