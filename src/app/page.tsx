@@ -140,6 +140,11 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <div className="md:hidden w-full border-y-2">
+            <div className="bg-primary text-primary-foreground px-2 py-1">
+              <h2>{activeSection}</h2>
+            </div>
+          </div>
           <div className="relative w-full flex-1 overflow-y-auto">
             {/* Mobile menu */}
             {isMenuOpen && (
